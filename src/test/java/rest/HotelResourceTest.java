@@ -15,13 +15,14 @@ import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Josef Marc Pedersen <cph-jp325@cphbusiness.dk>
  */
-public class JokeResourceTest {
+public class HotelResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/jpareststarter/api";
@@ -49,7 +50,7 @@ public class JokeResourceTest {
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
-        given().when().get("/jokes").then().statusCode(200);
+        given().when().get("/hotels").then().statusCode(200);
     }
 
 }

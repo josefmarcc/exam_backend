@@ -1,13 +1,16 @@
 package rest;
 
+import DTO.HotelDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.nimbusds.jose.shaded.json.parser.ParseException;
 import facades.HotelFacade;
 import java.io.IOException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -34,6 +37,14 @@ public class HotelResource {
     @Produces(MediaType.APPLICATION_JSON)
     public String allHotels() throws IOException, InterruptedException {
         return DataFetcher.fetchFromHotelsApi();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public String getHotel(@PathParam("id") int id) throws IOException, InterruptedException, ParseException {
+        HotelDTO hotelDTO = DataFetcher.fetchSingleHotel(id);
+        return gson.toJson(hotelDTO);
     }
 
 }

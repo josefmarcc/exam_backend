@@ -15,6 +15,7 @@ import java.util.List;
 public class DataFetcher {
 
     private static final String hotelsApi = "http://exam.cphdat.dk:8000/hotel/all";
+    private static final String hotelSingleApi = "http://exam.cphdat.dk:8000/hotel/";
 
     public static String fetchFromHotelsApi() throws InterruptedException, IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -24,6 +25,19 @@ public class DataFetcher {
         List<HotelDTO> lcs = (List<HotelDTO>) new Gson()
                 .fromJson(got, collectionType);
         return gson.toJson(lcs);
+    }
+
+    public static HotelDTO fetchSingleHotel(int id) throws InterruptedException, IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String got = HttpUtils.fetchData(hotelSingleApi + id);
+        HotelDTO hotelDTO = gson.fromJson(got, HotelDTO.class);
+        return hotelDTO;
+    }
+
+    public static void main(String[] args) throws InterruptedException, IOException {
+
+        HotelDTO hotel = fetchSingleHotel(4042);
+
     }
 
 }

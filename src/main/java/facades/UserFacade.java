@@ -41,9 +41,9 @@ public class UserFacade {
         }
         return user;
     }
-    
+
     public void deleteUser(String name) {
-        EntityManager em = emf.createEntityManager(); 
+        EntityManager em = emf.createEntityManager();
         User user = em.find(User.class, name);
 
         if (user == null) {
@@ -56,36 +56,33 @@ public class UserFacade {
                 em.getTransaction().commit();
             } finally {
                 em.close();
-            }     
+            }
         }
     }
-    
+
     public List<User> getAllUsers() {
-        EntityManager em = emf.createEntityManager(); 
+        EntityManager em = emf.createEntityManager();
         try {
             List<User> userList = em.createQuery("SELECT u from User u").getResultList();
-            return userList; 
+            return userList;
         } finally {
             em.close();
         }
     }
-    
-    
-    public void addUser(String userName, String password){
-        EntityManager em = emf.createEntityManager(); 
-        User user = new User(userName, password); 
-        
-        try{
+
+    public void addUser(String userName, String password) {
+        EntityManager em = emf.createEntityManager();
+        User user = new User(userName, password);
+
+        try {
             em.getTransaction().begin();
             Role userRole = new Role("user");
             user.addRole(userRole);
             em.persist(user);
             em.getTransaction().commit();
-        } finally{
-            em.close(); 
-        } 
+        } finally {
+            em.close();
+        }
     }
-      
-    
 
 }

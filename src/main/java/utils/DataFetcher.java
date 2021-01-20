@@ -33,11 +33,4 @@ public class DataFetcher {
         HotelDTO hotelDTO = gson.fromJson(got, HotelDTO.class);
         return hotelDTO;
     }
-
-    public static void main(String[] args) throws InterruptedException, IOException {
-
-        HotelDTO hotel = fetchSingleHotel(4042);
-
-    }
-
 }

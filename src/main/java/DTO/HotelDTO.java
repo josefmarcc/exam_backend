@@ -12,18 +12,20 @@ public class HotelDTO {
     private String content;
     private String email;
     private String title;
+    private String name;
     private String url;
     private String price;
     private String directions;
     private GeoDTO geo;
 
-    public HotelDTO(int id, String address, String phone, String content, String email, String title, String url, String price, String directions, GeoDTO geo) {
+    public HotelDTO(int id, String address, String phone, String content, String email, String title, String name, String url, String price, String directions, GeoDTO geo) {
         this.id = id;
         this.address = address;
         this.phone = phone;
         this.content = content;
         this.email = email;
         this.title = title;
+        this.name = name;
         this.url = url;
         this.price = price;
         this.directions = directions;
@@ -37,6 +39,14 @@ public class HotelDTO {
 
     public void setGeo(GeoDTO geo) {
         this.geo = geo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {

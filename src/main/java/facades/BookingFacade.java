@@ -4,9 +4,13 @@ import DTO.BookingDTO;
 import entities.Booking;
 import entities.User;
 import errorhandling.NotFoundException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
+import utils.EMF_Creator;
 
 /**
  *
@@ -57,6 +61,26 @@ public class BookingFacade {
             em.close();
         }
 
+    }
+
+    public List<BookingDTO> getUserBookings(String userName) {
+        EntityManager em = getEntityManager();
+        try {
+
+            TypedQuery<Booking> q1
+                    = em.createQuery("SELECT b FROM Booking b WHERE b.user.userName LIKE :name", Booking.class);
+            List<Booking> bookingList = q1.setParameter("name", userName).getResultList();
+
+            List<BookingDTO> bookingListDTO = new ArrayList();
+            for (Booking booking : bookingList) {
+                BookingDTO bookingDTO = new BookingDTO(booking);
+                bookingListDTO.add(bookingDTO);
+            }
+
+            return bookingListDTO;
+        } finally {
+            em.close();
+        }
     }
 
 }

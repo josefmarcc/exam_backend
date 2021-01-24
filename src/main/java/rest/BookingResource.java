@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 import errorhandling.NotFoundException;
 import facades.BookingFacade;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -44,10 +45,13 @@ public class BookingResource {
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
+    @RolesAllowed("user")
     public String addBooking(String booking) throws NotFoundException {
+        String thisuser = securityContext.getUserPrincipal().getName();
         BookingDTO bookingDTO = gson.fromJson(booking, BookingDTO.class);
         bf.addBooking(bookingDTO.getStartDate(), bookingDTO.getDays(), bookingDTO.getPrice(), bookingDTO.getHotel(), bookingDTO.getUserName());
-        return gson.toJson(bookingDTO);
+        gson.toJson(bookingDTO);
+        return "Added booking to" + thisuser;
     }
 
     @GET

@@ -22,6 +22,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Josef Marc Pedersen <cph-jp325@cphbusiness.dk>
  */
+@Disabled
 public class HotelResourceTest {
 
     private static final int SERVER_PORT = 7777;

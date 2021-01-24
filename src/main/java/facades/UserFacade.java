@@ -85,4 +85,8 @@ public class UserFacade {
         }
     }
 
+    public static void main(String[] args) {
+
+    }
+
 }

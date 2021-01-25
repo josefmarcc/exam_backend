@@ -3,6 +3,8 @@ package facades;
 import DTO.BookingDTO;
 import entities.Booking;
 import entities.User;
+import errorhandling.BookingNotFoundException;
+import errorhandling.MissingInputException;
 import errorhandling.NotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -81,6 +83,36 @@ public class BookingFacade {
         } finally {
             em.close();
         }
+    }
+
+    public BookingDTO editBooking(BookingDTO b) throws BookingNotFoundException, MissingInputException {
+        if ((b.getHotel().length() == 0)) {
+            throw new MissingInputException("Hotel input missing");
+        }
+        EntityManager em = getEntityManager();
+
+        try {
+            em.getTransaction().begin();
+
+            Booking booking = em.find(Booking.class, b.getId());
+            if (booking == null) {
+                throw new BookingNotFoundException(String.format("Booking with id: (%d) not found", b.getId()));
+            } else {
+                // mangler denne del.
+                person.setFirstName(p.getfName());
+                person.setLastName(p.getlName());
+                person.setPhone(p.getPhone());
+                person.setLastEdited();
+                person.getAddress().setStreet(p.getStreet());
+                person.getAddress().setZip(p.getZip());
+                person.getAddress().setCity(p.getCity());
+            }
+            em.getTransaction().commit();
+            return new PersonDTO(person);
+        } finally {
+            em.close();
+        }
+
     }
 
 }

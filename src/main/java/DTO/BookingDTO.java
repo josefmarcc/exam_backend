@@ -9,6 +9,7 @@ import java.util.Date;
  */
 public class BookingDTO {
 
+    private int id;
     private Date startDate;
     private int days;
     private float price;
@@ -16,11 +17,20 @@ public class BookingDTO {
     private String userName;
 
     public BookingDTO(Booking booking) {
+        this.id = booking.getId();
         this.startDate = booking.getStartDate();
         this.days = booking.getDays();
         this.price = booking.getPrice();
         this.hotel = booking.getHotel();
         this.userName = booking.getUser().getUserName();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Date getStartDate() {

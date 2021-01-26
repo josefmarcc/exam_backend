@@ -98,21 +98,15 @@ public class BookingFacade {
             if (booking == null) {
                 throw new BookingNotFoundException(String.format("Booking with id: (%d) not found", b.getId()));
             } else {
-                // mangler denne del.
-                person.setFirstName(p.getfName());
-                person.setLastName(p.getlName());
-                person.setPhone(p.getPhone());
-                person.setLastEdited();
-                person.getAddress().setStreet(p.getStreet());
-                person.getAddress().setZip(p.getZip());
-                person.getAddress().setCity(p.getCity());
+                booking.setDays(b.getDays());
+                booking.setStartDate(b.getStartDate());
+                booking.setPrice(b.getPrice());
             }
             em.getTransaction().commit();
-            return new PersonDTO(person);
+            return new BookingDTO(booking);
         } finally {
             em.close();
         }
-
     }
 
 }

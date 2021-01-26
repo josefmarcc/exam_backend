@@ -14,6 +14,7 @@ import javax.ws.rs.core.UriBuilder;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
+import static org.hamcrest.Matchers.equalTo;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
@@ -63,6 +64,17 @@ public class HotelResourceTest {
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
         given().when().get("/hotels").then().statusCode(200);
+    }
+
+    @Test
+    public void testGetHotel() {
+        System.out.println("Testing GetHotel by ID 4042");
+        given()
+                .contentType("application/json")
+                .when()
+                .get("/hotels/4042").then()
+                .statusCode(200)
+                .body("id", equalTo(4042));
     }
 
 }

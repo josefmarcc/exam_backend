@@ -7,6 +7,7 @@ package facades;
 
 import entities.Role;
 import entities.User;
+import errorhandling.AlreadyExsistException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.Test;
@@ -67,10 +68,12 @@ public class UserFacadeTest {
 
     /**
      * Test of addUser method, of class UserFacade.
+     *
+     * @throws errorhandling.AlreadyExsistException
      */
     //@Disabled
     @Test
-    public void testAddUser() {
+    public void testAddUser() throws AlreadyExsistException {
         System.out.println("TESTING SIZE AFTER ADD METHOD ....");
 
         String userName = "user3";

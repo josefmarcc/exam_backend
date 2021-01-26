@@ -3,6 +3,7 @@ package facades;
 import DTO.UserDTO;
 import entities.Role;
 import entities.User;
+import errorhandling.AlreadyExsistException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -80,18 +81,23 @@ public class UserFacade {
         }
     }
 
-    public void addUser(String userName, String password) {
+    // tilføj noget hvis brugeren allerede eksisterer
+    public void addUser(String userName, String password) throws AlreadyExsistException {
         EntityManager em = emf.createEntityManager();
-        User user = new User(userName, password);
-
-        try {
-            em.getTransaction().begin();
-            Role userRole = new Role("user");
-            user.addRole(userRole);
-            em.persist(user);
-            em.getTransaction().commit();
-        } finally {
-            em.close();
+        User user = em.find(User.class, userName);
+        if (user == null) {
+            user = new User(userName, password);
+            try {
+                em.getTransaction().begin();
+                Role userRole = new Role("user");
+                user.addRole(userRole);
+                em.persist(user);
+                em.getTransaction().commit();
+            } finally {
+                em.close();
+            }
+        } else {
+            throw new AlreadyExsistException("User already exsist");
         }
     }
 

@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entities.Role;
 import entities.User;
+import errorhandling.AlreadyExsistException;
 import facades.BookingFacade;
 import facades.UserFacade;
 import java.util.List;
@@ -73,8 +74,7 @@ public class UserResource {
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public String addPerson(String user) {
-
+    public String addPerson(String user) throws AlreadyExsistException {
         User u = gson.fromJson(user, User.class);
         UserFacade.getUserFacade(EMF).addUser(u.getUserName(), u.getUserPass());
 

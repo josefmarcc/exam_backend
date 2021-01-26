@@ -66,6 +66,10 @@ public class User implements Serializable {
         this.bookingList = new ArrayList<>();
     }
 
+    public List<Booking> getBookingList() {
+        return bookingList;
+    }
+
     public void addBooking(Booking booking) {
         this.bookingList.add(booking);
         if (booking != null) {

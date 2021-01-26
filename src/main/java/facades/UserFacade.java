@@ -1,10 +1,13 @@
 package facades;
 
+import DTO.UserDTO;
 import entities.Role;
 import entities.User;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import security.errorhandling.AuthenticationException;
 
 public class UserFacade {
@@ -60,11 +63,18 @@ public class UserFacade {
         }
     }
 
-    public List<User> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
         EntityManager em = emf.createEntityManager();
         try {
-            List<User> userList = em.createQuery("SELECT u from User u").getResultList();
-            return userList;
+            TypedQuery<User> q1
+                    = em.createQuery("SELECT u from User u", User.class);
+            List<User> userList = q1.getResultList();
+            List<UserDTO> userListDTO = new ArrayList();
+            for (User user : userList) {
+                UserDTO userDTO = new UserDTO(user);
+                userListDTO.add(userDTO);
+            }
+            return userListDTO;
         } finally {
             em.close();
         }

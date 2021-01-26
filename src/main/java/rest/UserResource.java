@@ -1,9 +1,12 @@
 package rest;
 
+import DTO.BookingDTO;
+import DTO.UserDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entities.Role;
 import entities.User;
+import facades.BookingFacade;
 import facades.UserFacade;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
@@ -24,9 +27,10 @@ import utils.EMF_Creator;
 @Path("info")
 public class UserResource {
 
-    private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
+    private static final UserFacade UF = UserFacade.getUserFacade(EMF);
+
     @Context
     private UriInfo context;
 
@@ -44,14 +48,8 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("all")
     public String allUsers() {
-        EntityManager em = EMF.createEntityManager();
-        try {
-            TypedQuery<User> query = em.createQuery("select u from User u", entities.User.class);
-            List<User> users = query.getResultList();
-            return "[" + users.size() + "]";
-        } finally {
-            em.close();
-        }
+        List<UserDTO> userList = UF.getAllUsers();
+        return gson.toJson(userList);
     }
 
     @GET
